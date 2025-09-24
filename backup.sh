@@ -93,14 +93,6 @@ if ! git diff --quiet || [ -n "$(git ls-files --others --exclude-standard)" ]; t
         commit_message="Config backup: $(date '+%Y-%m-%d %H:%M:%S')"
         if git commit -m "$commit_message"; then
             log_success "Commit created successfully"
-
-            # Push
-            log_info "Pushing to remote..."
-            if git push; then
-                log_success "Successfully pushed to remote repository"
-            else
-                log_error "Git push failed."
-            fi
         else
             log_error "Git commit failed."
         fi
