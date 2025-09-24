@@ -1,0 +1,85 @@
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+OMP_PATH="${HOME}/.local/bin/oh-my-posh"
+export PATH=$PATH:/home/cris/.local/bin
+
+#Zoxide install in case its not present yet
+if ! dnf list --installed | grep -q "zoxide"; then
+    echo "Zoxide not installed. Installing..."
+    sudo dnf install -y zoxide
+fi
+
+#Oh my posh install in case its not present yet
+if [ ! -e "$OMP_PATH" ]; then
+    echo "Oh-my-posh not installed on ${OMP_PATH}. Installing..."
+    curl -s https://ohmyposh.dev/install.sh | bash -s
+fi
+
+#Zinit install in case its not present yet
+if [ ! -d "$ZINIT_HOME" ]; then
+    echo "Zinit not installed. Installing..."
+    mkdir -p "$(dirname $ZINIT_HOME)"
+    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
+
+#Zinit initialization
+source "${ZINIT_HOME}/zinit.zsh"
+
+#Oh-my-posh initialization
+eval "$(oh-my-posh init zsh --config $HOME/.config/oh-my-posh/prompt-theme.toml)"
+
+#Zsh plugins
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+
+#Completions
+autoload -U compinit && compinit # Load completions
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}' # Completions case-insensitive
+
+#History settings
+HISTSIZE=1000 # Number of commands to save
+HISTFILE=~/.zsh_history # Where to save said commands
+SAVEHIST=$HISTSIZE # How many commands to save to the disk
+HISTDUP=erase #Erase duplicate commands from the history
+setopt appendhistory # Append new commands to the end of the file
+setopt sharehistory # Share history between sessions
+setopt hist_ignore_space # Don't save commands that start with a space (to hide certain commands from the history)
+
+# Prevent duplicate entries from being stored in the history
+setopt hist_ignore_all_dups
+setopt hist_ignore_dups
+setopt hist_save_no_dups
+setopt hist_find_no_dups
+
+#Custom aliases
+alias ll='ls -lA --color=auto'
+alias supd='sudo dnf update'
+alias code='code . -n'
+alias aseprite='/home/cris/Documents/repositories/aseprite/build/bin/aseprite'
+alias battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -E "(percentage|state|time to empty)"'
+
+# Git
+alias ginit='git init'
+alias gcl='git clone'
+alias gcm='git commit'
+alias ga='git add'
+alias gst='git status'
+alias gbranch='git branch'
+alias gpush='git push'
+alias gpull='git pull'
+alias gdiff='git diff'
+alias grestore='git restore'
+alias grm='git rm'
+
+#Custom bindings
+bindkey "^[[H" beginning-of-line # Make Home key work
+bindkey "^[[F" end-of-line # Make End key work
+bindkey "^[[3~" delete-char # Make Del key work
+
+bindkey "^[[1;5D" backward-word #Ctrl-left to go back one word
+bindkey "^[[1;5C" forward-word #Ctrl-right to go forward one word
+bindkey "^[[3;5~" kill-word # Make Ctrl+Del delete the next word
+bindkey "^H" backward-kill-word # Make Ctrl+Backspace delete the previous word
+
+#Fuzzy finder and Zoxide (better cd command)
+eval "$(fzf --zsh)"
+eval "$(zoxide init --cmd cd zsh)"

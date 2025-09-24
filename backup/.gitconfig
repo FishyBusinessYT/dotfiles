@@ -1,0 +1,7 @@
+[user]
+	email = cristobalj.gonzalez@gmail.com
+	name = Cristóbal González
+[push]
+	autoSetupRemote = true
+[init]
+	defaultBranch = main

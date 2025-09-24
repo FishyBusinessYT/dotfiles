@@ -1,0 +1,98 @@
+#!/bin/bash
+# usb-mount.sh - Simple USB drive mounting script
+
+mount_usb() {
+    # List all unmounted USB devices
+    echo "Available unmounted USB devices:"
+    lsblk -f | grep -E "sd|nvme" | grep -v "/"
+
+    echo -e "\nEnter the device to mount (e.g., sdb1):"
+    read device
+
+    if [[ ! -e "/dev/$device" ]]; then
+        echo "Device /dev/$device does not exist!"
+        exit 1
+    fi
+
+    # Get filesystem label or use device name
+    label=$(lsblk -no LABEL "/dev/$device" | sed 's/ /_/g')
+    if [[ -z "$label" ]]; then
+        label="$device"
+    fi
+
+    mount_point="/media/$label"
+
+    # Create mount point
+    sudo mkdir -p "$mount_point"
+
+    # Mount the device
+    if sudo mount "/dev/$device" "$mount_point"; then
+        echo "Successfully mounted /dev/$device to $mount_point"
+    else
+        echo "Failed to mount /dev/$device"
+        sudo rmdir "$mount_point" 2>/dev/null
+    fi
+}
+
+unmount_usb() {
+    echo "Currently mounted USB devices:"
+    df -h | grep -E "/media|/mnt" | grep -E "sd|nvme"
+
+    echo -e "\nEnter the mount point or device to unmount:"
+    read target
+
+    # Handle both device and mount point inputs
+    if [[ "$target" == /* ]]; then
+        mount_point="$target"
+    else
+        # Assume it's just a device name
+        mount_point=$(findmnt -n -o TARGET "/dev/$target" 2>/dev/null)
+    fi
+
+    if [[ -z "$mount_point" ]]; then
+        echo "Could not find mount point for $target"
+        exit 1
+    fi
+
+    # Sync before unmounting
+    sync
+
+    # Unmount
+    if sudo umount "$mount_point"; then
+        echo "Successfully unmounted $mount_point"
+
+        # Remove mount point if it's empty and in /media
+        if [[ "$mount_point" == /media/* ]]; then
+            sudo rmdir "$mount_point" 2>/dev/null || true
+        fi
+    else
+        echo "Failed to unmount $mount_point"
+        echo "Device might be busy. Try: lsof +f -- $mount_point"
+    fi
+}
+
+list_devices() {
+    echo "All block devices:"
+    lsblk -f
+    echo -e "\nMounted filesystems:"
+    df -h | grep -E "sd|nvme|mmc"
+}
+
+case "$1" in
+    m)
+        mount_usb
+        ;;
+    u)
+        unmount_usb
+        ;;
+    l)
+        list_devices
+        ;;
+    *)
+        echo "Usage: $0 {m|u|l}"
+        echo "  m - Mount a USB device"
+        echo "  u - Unmount a USB device"
+        echo "  l - List all devices and mounts"
+        exit 1
+        ;;
+esac
