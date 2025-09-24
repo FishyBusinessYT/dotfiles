@@ -9,6 +9,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BACKUP_LIST="$SCRIPT_DIR/dirlist.txt"
 BACKUP_DIR="$SCRIPT_DIR/backup"
 
+cd $SCRIPT_DIR
+
 # Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -78,3 +80,33 @@ while read -r path || [ -n "$path" ]; do
 done < "$BACKUP_LIST"
 
 log_success "Backup completed!"
+
+# Check if there are any working tree changes or untracked files
+if ! git diff --quiet || [ -n "$(git ls-files --others --exclude-standard)" ]; then
+    log_info "Changes detected. Create commit? y/n: "
+
+    read -r response
+
+    if [[ $response =~ ^[Yy]$ ]]; then
+        # Commit
+        git add .
+        commit_message="Config backup: $(date '+%Y-%m-%d %H:%M:%S')"
+        if git commit -m "$commit_message"; then
+            log_success "Commit created successfully"
+
+            # Push
+            log_info "Pushing to remote..."
+            if git push; then
+                log_success "Successfully pushed to remote repository"
+            else
+                log_error "Git push failed."
+            fi
+        else
+            log_error "Git commit failed."
+        fi
+    else
+        echo "Git commit skipped."
+    fi
+else
+    log_info "No changes detected. Skipping commit."
+fi
