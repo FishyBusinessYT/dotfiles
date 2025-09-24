@@ -1,0 +1,8 @@
+.config/hypr
+.config/kitty
+.config/oh-my-posh
+.local/share/fonts
+
+.gitconfig
+.local/bin/mnt
+.zshrc
