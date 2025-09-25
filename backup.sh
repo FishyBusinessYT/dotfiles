@@ -35,8 +35,10 @@ log_error() {
 }
 
 
-# Create backup directory
+# Make sure the backup directory exists and is empty before proceding
 mkdir -p "$BACKUP_DIR"
+rm -r "${BACKUP_DIR}/"
+
 
 log_info "Starting backup process..."
 log_info "Home directory: $HOME"
@@ -83,9 +85,7 @@ log_success "Backup completed!"
 
 # Check if there are any working tree changes or untracked files
 if ! git diff --quiet || [ -n "$(git ls-files --others --exclude-standard)" ]; then
-    log_info "Changes detected. Create commit? y/n: "
-
-    read -r response
+    read -p "Changes detected. Create commit? y/N: " -n 1 -r response
 
     if [[ $response =~ ^[Yy]$ ]]; then
         # Commit
