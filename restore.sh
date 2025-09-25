@@ -38,10 +38,12 @@ log_warning "Existing files ${RED}WILL${NC} be overwritten!"
 echo
 
 read -p "Do you want to continue with the restore? y/N: " -n 1 -r response
-if [[ $response =~ ^[Yy]$ ]]; then
+if [[ ! $response =~ ^[Yy]$ ]]; then
     log_info "Restore cancelled"
     exit 0
 fi
+
+exit 0
 
 log_info "Starting restore process..."
 log_info "Home directory: $HOME"
