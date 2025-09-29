@@ -83,6 +83,9 @@ done < "$BACKUP_LIST"
 
 log_success "Backup completed!"
 
+# Switch to main branch for committing backups
+git checkout main
+
 # Check if there are any working tree changes or untracked files
 if ! git diff --quiet || [ -n "$(git ls-files --others --exclude-standard)" ]; then
     read -p "Changes detected. Create commit? y/N: " -n 1 -r response
@@ -98,7 +101,7 @@ if ! git diff --quiet || [ -n "$(git ls-files --others --exclude-standard)" ]; t
             log_error "Git commit failed."
         fi
     else
-        echo "Git commit skipped."
+        log_warning "Git commit skipped."
     fi
 else
     log_info "No changes detected. Skipping commit."
