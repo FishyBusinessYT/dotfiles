@@ -86,6 +86,7 @@ log_success "Backup completed!"
 # Check if there are any working tree changes or untracked files
 if ! git diff --quiet || [ -n "$(git ls-files --others --exclude-standard)" ]; then
     read -p "Changes detected. Create commit? y/N: " -n 1 -r response
+    echo
 
     if [[ $response =~ ^[Yy]$ ]]; then
         # Commit
