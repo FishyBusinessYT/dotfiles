@@ -56,6 +56,7 @@ alias supd='sudo dnf update'
 alias code='code . -n'
 alias aseprite='/home/cris/Documents/repositories/aseprite/build/bin/aseprite'
 alias battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -E "(percentage|state|time to empty)"'
+alias godot='godot --single-window'
 
 # Git
 alias ginit='git init'
