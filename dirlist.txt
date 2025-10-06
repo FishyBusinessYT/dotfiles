@@ -1,5 +1,6 @@
 .config/hypr
 .config/kitty
+.config/nvim
 .config/oh-my-posh
 .local/share/fonts
 
