@@ -1,0 +1,65 @@
+[global]
+    #Shape
+    width = 300
+    height = (0, 150)
+    offset = (45, 45)
+    frame_width = 3
+    corner_radius = 8
+
+    #Text
+    font = JetBrainsMono 12
+    markup = full
+    format = "<b>%s</b>\n%b"
+    ellipsize = end
+
+    #Spacing
+    padding = 10
+    horizontal_padding = 10
+    gap_size = 10
+
+    #Icon
+    min_icon_size = 0
+    max_icon_size = 32
+
+    #Progress bar
+    highlight = "#ffffff"
+    progress_bar_horizontal_alignment = left
+    progress_bar_height = 8
+    progress_bar_frame_width = 1
+    progress_bar_corner_radius = 4
+    progress_bar_min_width = 300
+    progress_bar_max_width = 300
+
+    #Behaviour
+    notification_limit = 5
+    sort = update
+    idle_threshold = 60
+    history_length = 0
+    word_wrap = true
+    show_age_threshold = 30
+
+    #Mouse
+    mouse_left_click = "do_action"
+    mouse_middle_click = "close_all"
+    mouse_right_click = "close_current"
+
+
+[urgency_low]
+    background = "#000000aa"
+    foreground = "#ffffffaa"
+    frame_color = "#ffffff66"
+    timeout = 10
+
+[urgency_normal]
+    background = "#000000aa"
+    foreground = "#ffffff"
+    frame_color = "#ffffffaa"
+    timeout = 10
+    override_pause_level = 40
+
+[urgency_critical]
+    background = "#150000aa"
+    foreground = "#ffffff"
+    frame_color = "#ff5555"
+    timeout = 0
+    override_pause_level = 90
