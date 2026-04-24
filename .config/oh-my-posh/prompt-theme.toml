@@ -1,0 +1,82 @@
+version = 3
+final_space = true
+console_title_template = "{{ .Shell }} in {{ .Folder }}"
+
+[palette]
+python_text = "#20CC44"
+pathname_text = "#99AAFF"
+git_text = "#6CAC6C"
+default_arrow_color = "#00FFFF"
+error_arrow_color = "#DF2F66"
+bat_high = "#44CC77"
+bat_low = "#EEDD1E"
+bat_charging = "#0099FF"
+
+[transient_prompt]
+  background = "transparent"
+  foreground = "p:default_arrow_color"
+  template = " "
+
+[secondary_prompt]
+  background = "transparent"
+  foreground = "p:default_arrow_color"
+  template = " "
+
+[[blocks]]
+  type = "prompt"
+  alignment = "left"
+  newline = true
+
+  [[blocks.segments]]
+    type = "path"
+    style = "plain"
+    background = "transparent"
+    foreground = "p:pathname_text"
+    template = "{{ .Path }}"
+
+    [blocks.segments.properties]
+      style = "full"
+
+  [[blocks.segments]]
+    type = "git"
+    style = "plain"
+    foreground = "p:git_text"
+    background = "transparent"
+    template = " {{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }} {{ if gt .Behind 0 }}󰞖{{ end }} {{ if gt .Ahead 0 }}󰞙{{ end }}"
+
+    [blocks.segments.properties]
+      fetch_status = true
+
+[[blocks]]
+  type = "prompt"
+  alignment = "left"
+  newline = true
+
+  [[blocks.segments]]
+    type = "battery"
+    style = "plain"
+    background = "transparent"
+    foreground_templates = [
+      "{{ if eq \"Charging\" .State.String }}p:bat_charging{{ end }}",
+      "{{ if le 20 .Percentage }}p:bat_high{{ end }}",
+      "{{ if gt 20 .Percentage }}p:bat_low{{ end }}"
+    ]
+    template = "{{ if not .Error }}{{ .Percentage }}% {{ end }}"
+
+  [[blocks.segments]]
+    type = "python"
+    style = "plain"
+    background = "transparent"
+    foreground = "p:python_text"
+    template = "{{ if .Venv }}({{ .Venv }}) {{ end }}"
+
+  [[blocks.segments]]
+    type="text"
+    style="plain"
+    background = "transparent"
+    foreground_templates = [
+      "{{ if gt .Code 0 }}p:error_arrow_color{{ end }}",
+      "{{ if eq .Code 0 }}p:default_arrow_color{{ end }}"
+    ]
+
+    template = "{{ .Code }} "
