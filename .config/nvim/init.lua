@@ -1,0 +1,5 @@
+require('keymaps')
+require('options')
+require('autocommands')
+require('diagnostics')
+require('lazynvim')
