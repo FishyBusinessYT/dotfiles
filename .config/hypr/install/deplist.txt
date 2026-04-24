@@ -1,0 +1,16 @@
+cliphist
+brightnessctl
+dunst
+hypridle
+hyprlock
+hyprpicker
+hyprshot
+hyprsunset
+kio-admin
+kitty
+swww
+wget
+wtype
+xdg-desktop-portal-gtk
+xdg-desktop-portal-hyprland
+zip
