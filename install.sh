@@ -23,7 +23,13 @@ tar -xf ./*.tar* --directory ./unzipped/
 #Remove unnecessary files
 cd ./unzipped
 rm ./*.txt ./*.md
-rm *JetBrains*Propo* *JetBrainsMono*Mono*
+rm *JetBrains*Propo*
+rm *JetBrainsMono*Mono* 
+rm *Extra*
+rm *Light*
+rm *Medium*
+rm *Semi*
+rm *Thin*
 find -type f -name '*JetBrains*' -not -name '*NL*' -delete
 
 echo Copying fonts and updating font cache...
