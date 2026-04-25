@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-cd $HOME/.config/hypr/install/
+cd $HOME
 
 echo Installing packages from deplist...
 if command -v pacman &> /dev/null; then
