@@ -3,7 +3,9 @@ set -e
 
 REPO="git@github.com:FishyBusinessYT/dotfiles.git"
 DOTFILES_DIR="$HOME/.dotfiles"
-function dots { git --git-dir="$DOTFILES_DIR/" --work-tree="$HOME" "$@" }
+function dots {
+    git --git-dir="$DOTFILES_DIR/" --work-tree="$HOME" "$@"
+}
 cd $HOME
 
 
