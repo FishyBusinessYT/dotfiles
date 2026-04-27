@@ -1,0 +1,4 @@
+# Install
+```bash
+    wget -O - update/link/to/install.sh | bash
+```
