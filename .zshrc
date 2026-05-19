@@ -58,12 +58,8 @@ setopt hist_find_no_dups
 
 #Custom aliases
 alias ll='ls -lAh --color=auto'
-alias supd='sudo dnf update'
-alias code='code . -n'
-alias aseprite='/home/cris/Documents/repositories/aseprite/build/bin/aseprite'
 alias battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -E "(percentage|state|time to empty)"'
 alias godot='godot --single-window -e'
-alias ff='fastfetch'
 alias activate='source venv/bin/activate &> /dev/null || source .venv/bin/activate &> /dev/null'
 alias c='clear'
 
