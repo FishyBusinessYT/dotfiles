@@ -5,6 +5,7 @@ console_title_template = "{{ .Shell }} in {{ .Folder }}"
 [palette]
 python_text = "#20CC44"
 pathname_text = "#99AAFF"
+user_text = "#AA99FF"
 git_text = "#6CAC6C"
 default_arrow_color = "#00FFFF"
 error_arrow_color = "#DF2F66"
@@ -28,11 +29,18 @@ bat_charging = "#0099FF"
   newline = true
 
   [[blocks.segments]]
+    type = "session"
+    style = "plain"
+    background = "transparent"
+    foreground = "p:user_text"
+    template = "{{ if .SSHSession }} {{ end }}{{ .UserName }}@{{ .HostName }} "
+
+  [[blocks.segments]]
     type = "path"
     style = "plain"
     background = "transparent"
     foreground = "p:pathname_text"
-    template = "{{ .Path }}"
+    template = "{{ .Path }} "
 
     [blocks.segments.properties]
       style = "full"
@@ -42,7 +50,7 @@ bat_charging = "#0099FF"
     style = "plain"
     foreground = "p:git_text"
     background = "transparent"
-    template = " {{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }} {{ if gt .Behind 0 }}󰞖{{ end }} {{ if gt .Ahead 0 }}󰞙{{ end }}"
+    template = "{{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }} {{ if gt .Behind 0 }}󰞖{{ end }} {{ if gt .Ahead 0 }}󰞙{{ end }} "
 
     [blocks.segments.properties]
       fetch_status = true
