@@ -40,7 +40,7 @@ hl.bind('SUPER + SHIFT + P', hl.dsp.exec_cmd('hyprpicker -a -n --format=hex'))
 
 -- Open clipboard history
 hl.bind(
-    'SUPER + SHIFT + V',
+    'SUPER + V',
     hl.dsp.exec_cmd(
         'killall clipboard_history.sh || kitty --class clipboard-kitty -e ~/.config/hypr/scripts/clipboard_history.sh'
     )
