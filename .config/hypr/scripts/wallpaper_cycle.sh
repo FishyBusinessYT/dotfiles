@@ -1,12 +1,19 @@
 #!/bin/zsh
 echo "Wallpapers Cycling!"
 
-INTERVAL=30m
+INTERVAL=5m
 WALLPAPERS_DIR="$HOME/.config/hypr/wallpapers"
 
 while true; do
-    WALLPAPER=$(find "$WALLPAPERS_DIR" -type f -iname "*.png" | shuf -n 1)
+    WALLPAPER=$(find "$WALLPAPERS_DIR" \
+        -type f -iname "*.png" \
+        -not -iname "current.png" \
+        | shuf -n 1
+    )
     cp $WALLPAPER $WALLPAPERS_DIR/current.png
-    awww img "$WALLPAPERS_DIR/current.png" --transition-step 20
+    awww img "$WALLPAPERS_DIR/current.png" \
+        -t center \
+        --transition-step 255 \
+        --transition-fps 60 \
     sleep $INTERVAL
 done
