@@ -32,9 +32,3 @@ hl.on('hyprland.start', function()
     -- Idle management daemon
     hl.exec_cmd('hypridle')
 end)
-
-hl.config({
-    misc = {
-        --        disable_autoreload = true,
-    },
-})
