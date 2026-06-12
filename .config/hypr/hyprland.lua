@@ -18,7 +18,7 @@ hl.on('hyprland.start', function()
 
     -- Wallpaper manager
     hl.exec_cmd('awww-daemon --no-cache')
-    hl.exec_cmd('~/.config/hypr/scripts/wallpaper_cycle.sh')
+    hl.exec_cmd('~/.config/wallpapers/cycle.sh')
 
     -- Battery level notification
     hl.exec_cmd('~/.config/hypr/scripts/battery_notify.sh')

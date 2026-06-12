@@ -1,8 +1,7 @@
 #!/bin/zsh
-echo "Wallpapers Cycling!"
 
 INTERVAL=5m
-WALLPAPERS_DIR="$HOME/.config/hypr/wallpapers"
+WALLPAPERS_DIR="$HOME/.config/wallpapers"
 
 while true; do
     WALLPAPER=$(find "$WALLPAPERS_DIR" \
@@ -14,6 +13,6 @@ while true; do
     awww img "$WALLPAPERS_DIR/current.png" \
         -t center \
         --transition-step 255 \
-        --transition-fps 60 \
+        --transition-fps 60
     sleep $INTERVAL
 done
