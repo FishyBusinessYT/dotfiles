@@ -1,7 +1,5 @@
 accountsservice
 alsa-firmware
-alsa-plugins
-alsa-utils
 awesome-terminal-fonts
 awww
 base
@@ -16,7 +14,6 @@ bluez-obex
 bluez-utils
 brightnessctl
 btop
-btrfs-assistant
 btrfs-progs
 cachyos-grub-theme
 cachyos-hooks
@@ -28,7 +25,6 @@ cachyos-settings
 cachyos-v3-mirrorlist
 cachyos-v4-mirrorlist
 cantarell-fonts
-chntpw
 chwd
 cliphist
 cpupower
@@ -39,7 +35,6 @@ cups-pdf
 device-mapper
 diffutils
 dmidecode
-dmraid
 dnsmasq
 docker
 docker-compose
@@ -50,8 +45,6 @@ efibootmgr
 efitools
 ethtool
 exfatprogs
-f2fs-tools
-ffmpegthumbnailer
 firefox
 foomatic-db
 foomatic-db-engine
@@ -59,6 +52,7 @@ foomatic-db-gutenprint-ppds
 foomatic-db-nonfree
 foomatic-db-nonfree-ppds
 foomatic-db-ppds
+freecad
 fzf
 ghostscript
 git
@@ -67,14 +61,9 @@ greetd
 grub
 grub-btrfs-support
 grub-hook
-gsfonts
-gst-libav
 gst-plugin-pipewire
 gst-plugin-va
-gst-plugins-bad
-gst-plugins-ugly
 gutenprint
-hdparm
 hplip
 hwdetect
 hypridle
@@ -89,8 +78,6 @@ intel-media-driver
 intel-ucode
 iptables
 iwd
-jfsutils
-kio-admin
 kitty
 less
 lib32-mesa
@@ -105,7 +92,6 @@ linux-cachyos-lts
 linux-cachyos-lts-headers
 linux-firmware
 logrotate
-lsb-release
 lsscsi
 lvm2
 man-db
@@ -115,14 +101,9 @@ mesa-utils
 mkinitcpio
 modemmanager
 mtools
-nano
 neovim
-netctl
 networkmanager
-networkmanager-openvpn
-nfs-utils
 nilfs-utils
-nmap
 noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji
@@ -134,7 +115,6 @@ opencl-mesa
 openssh
 os-prober
 pacman-contrib
-pavucontrol
 perl
 pipewire-alsa
 pipewire-pulse
@@ -143,9 +123,7 @@ playerctl
 plocate
 plymouth
 polkit-kde-agent
-poppler-glib
 power-profiles-daemon
-pv
 python
 python-pyqt5
 python-reportlab
@@ -176,20 +154,18 @@ usbutils
 uv
 vpl-gpu-rt
 vulkan-intel
-wev
 wget
 which
 wireless-regdb
 wireplumber
 wl-clipboard
 wpa_supplicant
-wtype
 xdg-desktop-portal-gtk
 xdg-desktop-portal-hyprland
 xdg-user-dirs
 xfsprogs
-xl2tpd
 xorg-xwayland
+yggdrasil
 zip
 zoxide
 zsh
