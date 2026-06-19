@@ -57,7 +57,7 @@ setopt hist_save_no_dups
 setopt hist_find_no_dups
 
 #Custom aliases
-alias ll='ls -lAh --color=auto'
+alias ll='ls -Fahlv --color=auto --group-directories-first'
 alias battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -E "(percentage|state|time to empty)"'
 alias godot='godot --single-window -e'
 alias activate='source venv/bin/activate &> /dev/null || source .venv/bin/activate &> /dev/null'

@@ -3,13 +3,11 @@
 -- Default programs
 local terminal = 'kitty'
 local browser = 'firefox'
-local fileExplorer = 'ranger'
 
 -- Apps
 hl.bind('SUPER + T', hl.dsp.exec_cmd(terminal))
 hl.bind('SUPER + F', hl.dsp.exec_cmd(browser))
 hl.bind('SUPER + G', hl.dsp.exec_cmd('godot'))
--- hl.bind('SUPER + E', hl.dsp.exec_cmd(fileExplorer))
 
 -- Shutdown, suspend, reboot and lock
 hl.bind(
