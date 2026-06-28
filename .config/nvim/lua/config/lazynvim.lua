@@ -1,4 +1,4 @@
---Bootstrap lazy.nvim
+-- Bootstrap lazy.nvim
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 
@@ -25,7 +25,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
---Load plugins with lazy.nvim
+-- Load plugins with lazy.nvim
 require('lazy').setup('plugins', {
     rocks = { enabled = false },
     install = { colorscheme = { 'catppuccin' } },
