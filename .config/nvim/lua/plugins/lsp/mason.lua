@@ -2,7 +2,7 @@
 ---@type MasonSettings
 local mason_opts = {
     firewall = {
-        enabled = true
+        enabled = true,
     },
     ui = {
         icons = {

@@ -1,10 +1,10 @@
-local virtualTextHandler = function(virtText, _lnum, _endLnum, lineWidth, truncate)
+local virtualTextHandler = function(virtText, _lNum, _endLNum, lWidth, trunc)
     -- This stores the result
     local newVirtText = {}
 
     local suffix = ' ... '
     local suffWidth = vim.fn.strdisplaywidth(suffix)
-    local targetWidth = lineWidth - suffWidth
+    local targetWidth = lWidth - suffWidth
     local currWidth = 0
 
     -- virtText is a table in the form {{str, any}, ...} where str is the text
@@ -19,7 +19,7 @@ local virtualTextHandler = function(virtText, _lnum, _endLnum, lineWidth, trunca
             table.insert(newVirtText, chunk)
         else
             -- Truncate text to fit available space (desired width is the 2nd arg)
-            chunkText = truncate(chunkText, targetWidth - currWidth)
+            chunkText = trunc(chunkText, targetWidth - currWidth)
 
             -- Insert and break out of the loop
             local newChunk = { chunkText, chunk[2] }
