@@ -1,6 +1,6 @@
 local opt = vim.opt
 
---  VISUAL
+-- VISUAL
 opt.number = true -- Show current line number
 opt.relativenumber = true -- Show relative numbers for easy jumps
 opt.cursorline = true -- Highlight the line where the cursor's located
@@ -38,6 +38,7 @@ opt.virtualedit = 'block' -- Allow cursor to move over empty space in visual blo
 opt.timeoutlen = 200 -- How much to wait for a key sequence to complete
 
 -- FOLDS
+vim.wo.foldmethod = 'expr' -- Use a custom expression for folds (see UFO plugin)
 opt.foldlevelstart = 99 -- Keep all folds open on file load
 opt.foldcolumn = 'auto' -- Amount of columns to reserve for folds
 opt.foldtext = '' -- Display the line's normal text when folded
@@ -50,7 +51,4 @@ opt.fillchars = { -- Remove ugly dashes from folds
 opt.splitbelow = true -- Horizontally split windows go down
 opt.splitright = true -- Vertically split windows go right
 
--- COMPLETION
-
-vim.bo.indentexpr = 'v:lua.require("nvim-treesitter").indentexpr()' -- Treesitter indents
-vim.wo.foldmethod = 'expr' -- Use an expression for folds (useful for treesitter)
+-- TODO COMPLETION
