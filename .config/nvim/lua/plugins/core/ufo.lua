@@ -36,7 +36,6 @@ return {
     'kevinhwang91/nvim-ufo',
     dependencies = { 'kevinhwang91/promise-async' },
 
-    ---@module 'nvim-ufo'
     ---@type UfoConfig
     opts = {
         open_fold_hl_timeout = 150,

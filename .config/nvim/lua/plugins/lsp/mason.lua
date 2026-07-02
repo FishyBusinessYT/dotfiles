@@ -1,4 +1,3 @@
----@module 'mason'
 ---@type MasonSettings
 local mason_opts = {
     firewall = {
@@ -13,7 +12,6 @@ local mason_opts = {
     },
 }
 
----@module 'mason-lspconfig'
 ---@type MasonLspconfigSettings
 local mason_lspcfg_opts = {
     automatic_enable = true,
