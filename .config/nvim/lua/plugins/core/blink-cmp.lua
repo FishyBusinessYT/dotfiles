@@ -8,13 +8,14 @@ return {
     opts = {
         keymap = {
             preset = 'default',
-            ['<Tab>'] = { 'accept', 'fallback' },
+            ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
+            ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
         },
 
         completion = {
             keyword = { range = 'full' },
             trigger = { show_on_insert = true }, -- Auto show
-            list = { selection = { auto_insert = false } },
+            list = { selection = { preselect = false, auto_insert = true } },
             menu = { draw = { snippet_indicator = ' >>' } },
             ghost_text = { enabled = true },
 
@@ -26,6 +27,11 @@ return {
 
         signature = { enabled = true },
         fuzzy = { implementation = 'rust' },
-        cmdline = { completion = { menu = { auto_show = true } } },
+        cmdline = {
+            completion = {
+                list = { selection = { preselect = false, auto_insert = true } },
+                menu = { auto_show = true },
+            },
+        },
     },
 }
