@@ -35,7 +35,7 @@ opt.iskeyword = '@,48-57,_,192-255,-' -- Treat dash as part of the word
 opt.clipboard = 'unnamedplus' -- Sync Neovim and system clipboard
 opt.mouse = '' -- Disable mouse
 opt.virtualedit = 'block' -- Allow cursor to move over empty space in visual block mode
-opt.timeoutlen = 200 -- How much to wait for a key sequence to complete
+opt.timeoutlen = 100 -- Set this to a low value for which-key to trigger quickly
 
 -- FOLDS
 vim.wo.foldmethod = 'expr' -- Use a custom expression for folds (see UFO plugin)
