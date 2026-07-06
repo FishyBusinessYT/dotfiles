@@ -11,9 +11,9 @@ vim.api.nvim_create_autocmd('FileType', {
     end,
 })
 
--- Close help pages with <q>
+-- Close some buffers with <q>
 vim.api.nvim_create_autocmd('FileType', {
-    pattern = { 'help' },
+    pattern = { 'help', 'qf' },
     callback = function(event)
         vim.keymap.set(
             'n',
