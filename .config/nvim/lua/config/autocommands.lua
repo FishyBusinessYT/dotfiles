@@ -3,14 +3,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     callback = function() vim.hl.on_yank({ timeout = 50 }) end,
 })
 
--- Use Treesitter highlighting
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = { 'lua', 'python', 'rust' },
-    callback = function()
-        vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-    end,
-})
-
 -- Close some buffers with <q>
 vim.api.nvim_create_autocmd('FileType', {
     pattern = { 'help', 'qf' },
