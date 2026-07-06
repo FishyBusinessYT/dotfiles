@@ -1,6 +1,6 @@
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 OMP_PATH="${HOME}/.local/bin/oh-my-posh"
-export PATH=$PATH:/home/cris/.local/bin
+export PATH=$PATH:$HOME/.local/bin
 
 #Zoxide install in case its not present yet
 if ! command -v zoxide &> /dev/null; then
@@ -73,6 +73,7 @@ alias gd='git diff'
 alias gl='git log --graph --oneline --all --decorate'
 alias gs='git switch'
 alias gf='git fetch'
+alias gb='git branch'
 
 #Dotfiles management
 alias dots='/usr/bin/git --work-tree=$HOME --git-dir=$HOME/.dotfiles'
@@ -85,6 +86,7 @@ alias dotsd='dots diff'
 alias dotsl='dots log --graph --oneline --all --decorate'
 alias dotsw='dots switch'
 alias dotsf='dots fetch'
+alias dotsb='dots branch'
 
 #Custom bindings
 bindkey "^n" history-beginning-search-forward

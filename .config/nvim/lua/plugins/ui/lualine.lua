@@ -1,9 +1,6 @@
 return {
     'nvim-lualine/lualine.nvim',
-    dependencies = {
-        'nvim-tree/nvim-web-devicons',
-        'justinhj/battery.nvim',
-    },
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     opts = {
         theme = 'auto',
         inactive_sections = {},
@@ -21,13 +18,7 @@ return {
             lualine_c = { 'branch', 'diagnostics' },
             lualine_x = { 'searchcount', 'selectioncount', 'location' },
             lualine_y = { 'lsp_status' },
-            lualine_z = {
-                { 'filetype', separator = '' },
-                {
-                    require('battery').get_status_line,
-                    fmt = function(str) return str:sub(5) end,
-                },
-            },
+            lualine_z = { { 'filetype', separator = '' } },
         },
     },
 }

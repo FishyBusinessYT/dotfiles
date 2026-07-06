@@ -4,9 +4,19 @@ return {
     event = 'VeryLazy',
     keys = {
         {
-            '<F9>',
+            '<leader>?',
             function() require('which-key').show({ global = true }) end,
-            desc = 'Buffer Local Keymaps (which-key)',
+            desc = 'Show keymaps',
+        },
+    },
+    ---@type wk.Opts
+    opts = {
+        preset = 'modern',
+        plugins = { spelling = { enabled = false } },
+        ---@type wk.Win.opts
+        win = {
+            width = 120,
+            padding = { 0, 0 },
         },
     },
 }
