@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 BATTERY_NOTIF_ID=9991
-ICONS_DIR=$HOME/.config/hypr/icons
+ICONS_DIR=$HOME/.config/scripts/notif-icons
 INTERVAL=15
 
 FULL_LEVEL=80

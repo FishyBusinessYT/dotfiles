@@ -3,7 +3,7 @@
 AUDIO_NOTIF_ID=9992
 TIMEOUT=1000
 INCREMENT=5%
-ICONS_DIR=$HOME/.config/hypr/icons/
+ICONS_DIR=$HOME/.config/scripts/notif-icons
 
 case $1 in
     vol_up)
