@@ -31,4 +31,7 @@ hl.on('hyprland.start', function()
 
     -- Idle management daemon
     hl.exec_cmd('hypridle')
+
+    -- Firefox
+    hl.exec_cmd('firefox')
 end)
