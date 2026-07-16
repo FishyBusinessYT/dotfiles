@@ -111,3 +111,4 @@ hl.bind(
     hl.dsp.exec_cmd(mediaControl .. ' "brightness_down"'),
     { locked = true, repeating = true }
 )
+hl.bind('SUPER + grave', hl.dsp.exec_cmd(mediaControl .. ' "play_pause"'))

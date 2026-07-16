@@ -56,4 +56,18 @@ case $1 in
 
         notify-send -t $TIMEOUT_MS 'Brightness decreased' -h int:value:$brightness -i $ICONS_DIR/sunny-outline.png -r $AUDIO_NOTIF_ID
         ;;
+    play_pause)
+        playerctl play-pause
+        playing=$(
+            playerctl status |
+            grep -cE 'Playing'  # 1 if command outputs 'Playing', 0 otherwise
+        )
+
+        if ((playing==1)); then
+            notify-send -t $TIMEOUT_MS 'Player resumed' -i $ICONS_DIR/play.png -r $AUDIO_NOTIF_ID
+        else
+            notify-send -t $TIMEOUT_MS 'Player paused' -i $ICONS_DIR/pause.png -r $AUDIO_NOTIF_ID
+        fi
+
+        ;;
 esac
