@@ -40,7 +40,7 @@ hl.bind('SUPER + SHIFT + P', hl.dsp.exec_cmd('hyprpicker -a -n --format=hex'))
 hl.bind(
     'SUPER + V',
     hl.dsp.exec_cmd(
-        'killall clipboard_history.sh || kitty --class clipboard-kitty -e ~/.config/hypr/scripts/clipboard_history.sh'
+        'killall clipboard_history.sh || kitty --class clipboard-kitty -e ~/.config/scripts/clipboard_history.sh'
     )
 )
 
@@ -80,7 +80,7 @@ hl.bind('SUPER + SHIFT + 8', hl.dsp.window.move({ workspace = 8 })) -- MAY NEED 
 hl.bind('SUPER + SHIFT + 9', hl.dsp.window.move({ workspace = 9 })) -- MAY NEED TO ADD, follow=true
 
 -- Multimedia keys for volume and LCD brightness
-local mediaControl = '$HOME/.config/hypr/scripts/media_control.sh'
+local mediaControl = '$HOME/.config/scripts/media_control.sh'
 hl.bind(
     'XF86AudioRaiseVolume',
     hl.dsp.exec_cmd(mediaControl .. ' "vol_up"'),
@@ -111,3 +111,4 @@ hl.bind(
     hl.dsp.exec_cmd(mediaControl .. ' "brightness_down"'),
     { locked = true, repeating = true }
 )
+hl.bind('SUPER + grave', hl.dsp.exec_cmd(mediaControl .. ' "play_pause"'))
