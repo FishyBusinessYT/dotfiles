@@ -14,15 +14,28 @@ case $1 in
         # Get resulting value
         volume=$(($(wpctl get-volume @DEFAULT_SINK@ | grep -Eo '[0-9]\.[0-9]*') * 100))
 
+        # Show mute icon if audio is muted
+        isMuted=$(wpctl get-volume @DEFAULT_SINK@ | grep -c MUTE)
+        icon=$ICONS_DIR/volume-high.png
+        if ((isMuted==1)); then
+            icon=$ICONS_DIR/volume-mute.png
+        fi
+
         # Send notification
-        notify-send -t $TIMEOUT_MS 'Volume increased' -h int:value:$volume -i $ICONS_DIR/volume-high.png -r $AUDIO_NOTIF_ID
+        notify-send -t $TIMEOUT_MS 'Volume increased' -h int:value:$volume -i $icon -r $AUDIO_NOTIF_ID
         ;;
     vol_down)
         wpctl set-volume @DEFAULT_SINK@ $INCREMENT-
 
         volume=$(($(wpctl get-volume @DEFAULT_SINK@ | grep -Eo '[0-9]\.[0-9]*') * 100))
 
-        notify-send -t $TIMEOUT_MS 'Volume lowered' -h int:value:$volume -i $ICONS_DIR/volume-low.png -r $AUDIO_NOTIF_ID
+        isMuted=$(wpctl get-volume @DEFAULT_SINK@ | grep -c MUTE)
+        icon=$ICONS_DIR/volume-low.png
+        if ((isMuted==1)); then
+            icon=$ICONS_DIR/volume-mute.png
+        fi
+
+        notify-send -t $TIMEOUT_MS 'Volume lowered' -h int:value:$volume -i $icon -r $AUDIO_NOTIF_ID
         ;;
     vol_mute)
         wpctl set-mute @DEFAULT_SINK@ toggle
