@@ -19,6 +19,7 @@ local mason_lspcfg_opts = {
         'lua_ls',
         'stylua',
         'pylsp',
+        'rust_analyzer',
     },
 }
 
