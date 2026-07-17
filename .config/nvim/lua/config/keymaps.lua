@@ -72,7 +72,7 @@ vim.keymap.set(
 -- Rename symbol with <Leader>r
 vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, { desc = 'Rename' })
 
--- Open code actions with <Leader>ca
+-- Open code actions with <Leader>a
 vim.keymap.set(
     'n',
     '<leader>a',
