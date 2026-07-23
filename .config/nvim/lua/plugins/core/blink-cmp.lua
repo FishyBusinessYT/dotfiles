@@ -10,11 +10,13 @@ return {
             preset = 'default',
             ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
             ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
+            ['<Esc>'] = { 'hide', 'fallback' },
         },
 
         completion = {
             keyword = { range = 'full' },
-            trigger = { show_on_insert = true }, -- Auto show
+            -- Show automatically unless actively editing snippet
+            trigger = { show_in_snippet = false },
             list = { selection = { preselect = false, auto_insert = true } },
             menu = { draw = { snippet_indicator = ' >>' } },
             ghost_text = { enabled = true },
