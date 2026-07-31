@@ -3,7 +3,7 @@
 [resource]
 resource_local_to_scene = false
 resource_name = ""
-interface/editor/localization/editor_language = "es"
+interface/editor/localization/editor_language = "auto"
 interface/editor/localization/localize_settings = true
 interface/editor/docks/dock_tab_style = 0
 interface/editor/docks/bottom_dock_tab_style = 0
@@ -283,7 +283,7 @@ editors/visual_editors/visual_shader/port_preview_size = 160
 run/window_placement/rect = 1
 run/window_placement/screen = -5
 run/window_placement/android_window = 0
-run/window_placement/game_embed_mode = 0
+run/window_placement/game_embed_mode = -1
 run/bottom_panel/action_on_play = 1
 run/bottom_panel/action_on_stop = 0
 run/output/font_size = 13
