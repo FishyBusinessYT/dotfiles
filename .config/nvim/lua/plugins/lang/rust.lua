@@ -17,7 +17,7 @@ local lsp_settings = {
     ---@type lspconfig.settings.rust_analyzer
     ['rust-analyzer'] = {
         cargo = {
-            features = { 'all' },
+            features = 'all',
             buildScripts = { enable = true },
         },
         checkOnSave = true, -- Add clippy lints for Rust
