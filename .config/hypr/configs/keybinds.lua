@@ -45,7 +45,7 @@ hl.bind(
 )
 
 -- Close window
-hl.bind('SUPER + Q', hl.dsp.window.kill())
+hl.bind('SUPER + Q', hl.dsp.window.close())
 
 -- Move focus with mainMod + arrow keys
 hl.bind('SUPER + H', hl.dsp.focus({ direction = 'l' }))
