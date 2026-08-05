@@ -21,7 +21,7 @@ hl.on('hyprland.start', function()
     hl.exec_cmd('~/.config/wallpapers/cycle.sh')
 
     -- Battery level notification
-    hl.exec_cmd('~/.config/hypr/scripts/battery_notify.sh')
+    hl.exec_cmd('~/.config/scripts/battery_notify.sh')
 
     -- Polkit authentication daemon
     hl.exec_cmd('systemctl --user start hyprpolkitagent')
