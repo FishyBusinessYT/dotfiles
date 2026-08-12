@@ -1,5 +1,13 @@
 -- Needs to be loaded after alpha itself.
 -- local utils = require('alpha.utils') -- For getting the top level dir for a git repo
+local header = {
+    [[               __                 (\_/)        __        ___]],
+    [[____________  |__| ____   __  _  _|O.OL_______|  |    __| _/]],
+    [[\_  __ \__  \ |  |/    \  \ \/ \/ /U U \_  __ \  |   / __ | ]],
+    [[ |  | \// __ \|  |   |  \  \     (  ==  )  | \/  |__/ /_/ | ]],
+    [[ |__|  (____  /__|___|  /   \/\_/ \____/|__|  |____/\____ | ]],
+    [[            \/        \/                                 \/ ]],
+}
 
 local opts = {
     setup = function() -- Function runs once before first draw
@@ -34,7 +42,7 @@ return {
         'nvim-mini/mini.icons',
         'nvim-lua/plenary.nvim',
     },
-    config = function()
+    config = function() -- Alpha modules can only be imported here:
         local config = require('alpha.themes.theta').config
         config.opts = opts
         require('alpha').setup(config)
