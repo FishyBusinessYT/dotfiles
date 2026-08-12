@@ -1,15 +1,23 @@
 -- Needs to be loaded after alpha itself.
 -- local utils = require('alpha.utils') -- For getting the top level dir for a git repo
 local header = {
-    [[               __                 (\_/)        __        ___]],
-    [[____________  |__| ____   __  _  _|O.OL_______|  |    __| _/]],
-    [[\_  __ \__  \ |  |/    \  \ \/ \/ /U U \_  __ \  |   / __ | ]],
-    [[ |  | \// __ \|  |   |  \  \     (  ==  )  | \/  |__/ /_/ | ]],
-    [[ |__|  (____  /__|___|  /   \/\_/ \____/|__|  |____/\____ | ]],
-    [[            \/        \/                                 \/ ]],
+    type = 'text',
+    val = {
+        [[ _______        __                  (\_/)        __        ___]],
+        [[ \      \___  _|__| _____   __  _  _|O.OL_______|  |    __| _/]],
+        [[ /   |   \  \/ /  |/     \  \ \/ \/ /U U \_  __ \  |   / __ | ]],
+        [[/    |    \   /|  |  Y Y  \  \     (  ==  )  | \/  |__/ /_/ | ]],
+        [[\____|__  /\_/ |__|__|_|  /   \/\_/ \____/|__|  |____/\____ | ]],
+        [[        \/              \/                                 \/ ]],
+    },
+    opts = {
+        position = 'center',
+        hl = 'AlphaHeader',
+    },
 }
 
 local opts = {
+    -- margin = 5, -- Not really relevant when everything is centered.
     setup = function() -- Function runs once before first draw
         -- Runs if we CD while alpha is running
         vim.api.nvim_create_autocmd('DirChanged', {
@@ -26,8 +34,8 @@ local opts = {
 
 local config = {
     layout = {
-        { type = 'padding', val = 2 },
-        --header,
+        { type = 'padding', val = 8 },
+        header,
         { type = 'padding', val = 2 },
         --projects,
         { type = 'padding', val = 2 },
@@ -43,8 +51,6 @@ return {
         'nvim-lua/plenary.nvim',
     },
     config = function() -- Alpha modules can only be imported here:
-        local config = require('alpha.themes.theta').config
-        config.opts = opts
         require('alpha').setup(config)
     end,
     --opts = config,
