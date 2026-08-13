@@ -1,5 +1,46 @@
 -- Needs to be loaded after alpha itself.
 -- local utils = require('alpha.utils') -- For getting the top level dir for a git repo
+local function make_button(shortcut, txt, callback)
+    local opts = { -- Button display options
+        position = 'center',
+        shortcut = shortcut,
+        cursor = -2,
+        width = 35,
+        align_shortcut = 'right',
+        hl = 'AlphaButtons',
+        hl_shortcut = 'AlphaShortcut',
+    }
+
+    -- Remove whitespace
+    shortcut = shortcut:gsub('%s', '')
+    if callback then
+        opts.keymap = { -- This is forwarded to vim.keymap.set by alpha
+            'n',
+            shortcut,
+            callback,
+            { noremap = true, silent = true, nowait = true },
+        }
+    end
+
+    local on_press
+    if type(callback) == 'function' then
+        on_press = callback
+    else
+        on_press = function()
+            local key =
+                vim.api.nvim_replace_termcodes(callback, true, false, true)
+            vim.api.nvim_feedkeys(key, 't', false)
+        end
+    end
+
+    return {
+        type = 'button',
+        val = txt,
+        on_press = on_press,
+        opts = opts,
+    }
+end
+
 local header = {
     type = 'text',
     val = {
@@ -13,6 +54,32 @@ local header = {
     opts = {
         position = 'center',
         hl = 'AlphaHeader',
+    },
+}
+
+local buttons = {
+    type = 'group',
+    val = {
+        {
+            type = 'text',
+            val = 'Quick links',
+            opts = { hl = 'SpecialComment', position = 'center' },
+        },
+        { type = 'padding', val = 1 },
+        make_button('e', '  New file', '<cmd>ene<CR>'),
+        make_button('<leader> f f', '󰈞  Find file'),
+        make_button('<leader> f g', '󰊄  Live grep'),
+        make_button('ñ', 'NUKLLEAR', function() vim.print('BOOM') end),
+        make_button(
+            'c',
+            '  Configuration',
+            '<cmd>exe \'cd\' stdpath (\'config\')<CR>'
+        ),
+        make_button('u', '  Update plugins', '<cmd>Lazy sync<CR>'),
+        make_button('q', '󰅚  Quit', '<cmd>qa<CR>'),
+    },
+    opts = {
+        spacing = 1, -- Test this and remove if unnecessary
     },
 }
 
@@ -37,9 +104,9 @@ local config = {
         { type = 'padding', val = 8 },
         header,
         { type = 'padding', val = 2 },
-        --projects,
+        buttons,
         { type = 'padding', val = 2 },
-        --buttons,
+        --projects,
     },
     opts = opts,
 }
