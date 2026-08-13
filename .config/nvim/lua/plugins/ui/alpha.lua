@@ -27,9 +27,9 @@ local function make_button(shortcut, txt, callback)
         on_press = callback
     else
         on_press = function()
-            local key =
+            local keys =
                 vim.api.nvim_replace_termcodes(callback, true, false, true)
-            vim.api.nvim_feedkeys(key, 't', false)
+            vim.api.nvim_feedkeys(keys, 't', false)
         end
     end
 
@@ -44,11 +44,13 @@ end
 local header = {
     type = 'text',
     val = {
-        [[ _______        __                  (\_/)        __        ___]],
-        [[ \      \___  _|__| _____   __  _  _|O.OL_______|  |    __| _/]],
-        [[ /   |   \  \/ /  |/     \  \ \/ \/ /U U \_  __ \  |   / __ | ]],
-        [[/    |    \   /|  |  Y Y  \  \     (  ==  )  | \/  |__/ /_/ | ]],
-        [[\____|__  /\_/ |__|__|_|  /   \/\_/ \____/|__|  |____/\____ | ]],
+        [[                                                              ]],
+        [[  |\_/|                                                       ]],
+        [[ _|O.OL_        __                              (\_/)      ___]],
+        [[ \ U U  \___  _|__| _____   __  _  _____________ X.O /  __| _/]],
+        [[ /   |   \  \/ /  |/     \  \ \/ \/ /    \_  __ \U U/  / __ | ]],
+        [[/    |    \   /|  |  Y Y  \  \     (  <>  )  | \/|  L_/ /_/ | ]],
+        [[\____|__  /\_/ |__|__|_|  /   \/\_/ \____/|__|  /v_v_/\____ | ]],
         [[        \/              \/                                 \/ ]],
     },
     opts = {
@@ -62,25 +64,20 @@ local buttons = {
     val = {
         {
             type = 'text',
-            val = 'Quick links',
-            opts = { hl = 'SpecialComment', position = 'center' },
+            val = 'Quick Menu',
+            opts = { hl = 'WarningMsg', position = 'center' },
         },
-        { type = 'padding', val = 1 },
-        make_button('e', '  New file', '<cmd>ene<CR>'),
-        make_button('<leader> f f', '󰈞  Find file'),
-        make_button('<leader> f g', '󰊄  Live grep'),
-        make_button('ñ', 'NUKLLEAR', function() vim.print('BOOM') end),
+        { type = 'padding', val = 0 }, -- 2 spaces are still inserted, see 'spacing' below
+        make_button('e', '  New file', '<cmd>enew<CR>'),
         make_button(
             'c',
             '  Configuration',
             '<cmd>exe \'cd\' stdpath (\'config\')<CR>'
         ),
-        make_button('u', '  Update plugins', '<cmd>Lazy sync<CR>'),
+        make_button('u', '  Update plugins', '<cmd>Lazy sync<CR>'),
         make_button('q', '󰅚  Quit', '<cmd>qa<CR>'),
     },
-    opts = {
-        spacing = 1, -- Test this and remove if unnecessary
-    },
+    opts = { spacing = 1 },
 }
 
 local opts = {
