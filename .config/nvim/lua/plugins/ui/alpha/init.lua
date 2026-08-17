@@ -44,14 +44,14 @@ end
 local header = {
     type = 'text',
     val = {
-        [[                                                              ]],
-        [[  |\_/|                                                       ]],
-        [[ _|O.OL_        __                              (\_/)      ___]],
-        [[ \ U U  \___  _|__| _____   __  _  _____________ X.O /  __| _/]],
-        [[ /   |   \  \/ /  |/     \  \ \/ \/ /    \_  __ \U U/  / __ | ]],
-        [[/    |    \   /|  |  Y Y  \  \     (  <>  )  | \/|  L_/ /_/ | ]],
-        [[\____|__  /\_/ |__|__|_|  /   \/\_/ \____/|__|  /v_v_/\____ | ]],
-        [[        \/              \/                                 \/ ]],
+        [[                                                               ]],
+        [[  |\_/|                                                        ]],
+        [[ _|O.OL_        __                               (\_/)      ___]],
+        [[ \ U U  \___  _|__| _____   __  _  _____________  X.O /  __| _/]],
+        [[ /       \  \/ /  |/     \  \ \/ \/ /    \_  __ \ U U/  / __ | ]],
+        [[/    |    \   /|  |  Y Y  \  \     (  <>  )  | \/ |  L_/ /_/ | ]],
+        [[\____|__  /\_/ |__|__|_|  /   \/\_/ \____/|__|   /v_v_/\____ | ]],
+        [[        \/              \/                                  \/ ]],
     },
     opts = {
         position = 'center',
@@ -80,6 +80,12 @@ local buttons = {
     opts = { spacing = 1 },
 }
 
+local projects = {
+    type = 'group',
+    val = {},
+    opts = { spacing = 1 },
+}
+
 local opts = {
     -- margin = 5, -- Not really relevant when everything is centered.
     setup = function() -- Function runs once before first draw
@@ -103,7 +109,7 @@ local config = {
         { type = 'padding', val = 2 },
         buttons,
         { type = 'padding', val = 2 },
-        --projects,
+        projects,
     },
     opts = opts,
 }
