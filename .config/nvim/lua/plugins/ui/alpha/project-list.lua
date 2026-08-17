@@ -47,6 +47,8 @@ local function get_entries()
         return {}
     end
 
+    -- Sort on read to account for time decay
+    sort_by_frecency(decoded)
     return decoded
 end
 
@@ -54,8 +56,7 @@ local function write_db(entries)
     -- No pcalls needed here since entries should be properly handled everywhere
     -- else, and data_path is standardized, so no permissions issues should ever
     -- arise.
-    -- Also, entries is already sorted, so there's no need to sort it again
-    -- here OR when reading the DB
+    -- Also, entries are sorted on read, so there's no point to sort them here.
     local encoded = vim.fn.json_encode(entries)
     vim.fn.writefile({ encoded }, data_path)
 end
