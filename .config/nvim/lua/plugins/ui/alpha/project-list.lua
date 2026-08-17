@@ -12,8 +12,8 @@ local data_path = vim.fn.stdpath('data') .. '/project-list.json'
 local visited_projects = {} -- Per-session
 local buf_roots = {} -- Maps buffers to `root_dir`s
 
-local function frecency(entry)
-    local age = os.time() - entry.last_accessed
+local function frecency(entry, now)
+    local age = now - entry.last_accessed
     if age < HOUR then
         return entry.score * 4
     elseif age < DAY then
@@ -26,7 +26,12 @@ local function frecency(entry)
 end
 
 local function sort_by_frecency(entries)
-    table.sort(entries, function(a, b) return frecency(a) > frecency(b) end)
+    -- Pinning this to keep it consistent across every element
+    local now = os.time()
+    table.sort(
+        entries,
+        function(a, b) return frecency(a, now) > frecency(b, now) end
+    )
 end
 
 local function get_entries()
@@ -53,12 +58,17 @@ local function get_entries()
 end
 
 local function write_db(entries)
-    -- No pcalls needed here since entries should be properly handled everywhere
-    -- else, and data_path is standardized, so no permissions issues should ever
-    -- arise.
-    -- Also, entries are sorted on read, so there's no point to sort them here.
+    -- Entries are sorted on read due to score decay, so there's no point to
+    -- sort them here.
     local encoded = vim.fn.json_encode(entries)
-    vim.fn.writefile({ encoded }, data_path)
+
+    local ok_write, err = pcall(vim.fn.writefile, { encoded }, data_path)
+    if not ok_write then
+        vim.notify(
+            'project-list: failed to write DB: ' .. tostring(err),
+            vim.log.levels.ERROR
+        )
+    end
 end
 
 --- Record one access to `path`. No-ops if this project was already accessed
@@ -147,7 +157,7 @@ function M.setup()
     })
 end
 
---- Returns up to 12 project paths, sorted by frecency (highest first).
+--- Returns all stored project paths, sorted by frecency (highest first).
 function M.get_projects()
     local paths = {}
     for _, e in ipairs(get_entries()) do
