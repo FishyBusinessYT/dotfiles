@@ -87,9 +87,12 @@ local function record_access(path)
 
     sort_by_frecency(entries)
 
-    -- Only one entry is added at a time, so we can just drop the possible
-    -- extra element safely without ever even checking if it's there.
-    entries[MAX_PROJECTS + 1] = nil
+    -- Even though only one entry is added at a time, the DB file could be
+    -- tampered with, MAX_PROJECTS could be reduced by an arbitrary amount, etc.
+    -- This is safer.
+    for i = #entries, MAX_PROJECTS + 1, -1 do
+        entries[i] = nil
+    end
 
     write_db(entries)
 end
