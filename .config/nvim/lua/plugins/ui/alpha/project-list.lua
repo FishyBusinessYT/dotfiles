@@ -131,9 +131,8 @@ local function get_root_dir(bufnr, client)
     > ]]
     -- Conflict: ask which one to trust.
     local input = vim.fn.input(string.format(prompt, cached_rd, root_dir))
-    -- Rough tests show that the prompt is auto-cleared.
-    -- TODO verify if this next line is actually needed.
-    -- vim.cmd('redraw')
+    -- Clearing the command line manually may be necessary for certain configs
+    vim.cmd('redraw')
 
     -- Default to cached dir unless user enters 'n'
     local selection = (string.lower(input) == 'n') and root_dir or cached_rd
