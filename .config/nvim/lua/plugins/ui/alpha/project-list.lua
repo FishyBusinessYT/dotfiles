@@ -110,38 +110,40 @@ end
 --- Resolve root_dir for a buffer, prompting only if this buffer has already
 --- resolved to a *different* root_dir before.
 local function get_root_dir(bufnr, client)
-    -- Try to get root_dir from LSP client
-    local root_dir = client.config and client.config.root_dir
-    -- If that doesn't work fallback to dir containing git repo
-    if not root_dir then root_dir = vim.fs.root(bufnr, { '.git' }) end
-    -- If that fails we'll assume the buffer does not belong to a project at all.
-    if not root_dir then return nil end
+    local cached_dir = buf_roots[bufnr]
+    local lsp_dir = client.config and client.config.root_dir
+    if lsp_dir then lsp_dir = vim.fs.normalize(lsp_dir) end
 
-    root_dir = vim.fs.normalize(root_dir)
+    if lsp_dir then
+        if not cached_dir then
+            buf_roots[bufnr] = lsp_dir
+            return lsp_dir
+        end
 
-    local cached_rd = buf_roots[bufnr]
-    if cached_rd == nil or cached_rd == root_dir then
-        buf_roots[bufnr] = root_dir
-        return root_dir
+        if cached_dir == lsp_dir then
+            buf_roots[bufnr] = cached_dir
+            return cached_dir
+        end
+
+        local git_dir = vim.fs.root(bufnr, { '.git' })
+        if git_dir then git_dir = vim.fs.normalize(git_dir) end
+        buf_roots[bufnr] = git_dir
+        return git_dir
     end
 
-    local prompt = [[project-list: Please select project root dir:
-    Default: %s
-    [N]ew: %s
-    > ]]
-    -- Conflict: ask which one to trust.
-    local input = vim.fn.input(string.format(prompt, cached_rd, root_dir))
-    -- Clearing the command line manually may be necessary for certain configs
-    vim.cmd('redraw')
+    if cached_dir then
+        buf_roots[bufnr] = cached_dir
+        return cached_dir
+    end
 
-    -- Default to cached dir unless user enters 'n'
-    local selection = (string.lower(input) == 'n') and root_dir or cached_rd
-    buf_roots[bufnr] = selection
-    return selection
+    local git_dir = vim.fs.root(bufnr, { '.git' })
+    if git_dir then git_dir = vim.fs.normalize(git_dir) end
+    buf_roots[bufnr] = git_dir
+    return git_dir
 end
 
 function M.setup()
-    vim.api.nvim_create_autocmd('LspAttach', {
+    vim.api.nvim_create_autocmd('LspAttach', { -- what if there is no LSP?
         -- This ensures the autocommand will not stack, just in case setup is
         -- ever called more than once per neovim session.
         group = vim.api.nvim_create_augroup('project-list', { clear = true }),

@@ -1,4 +1,8 @@
+-- Set up project tracking autocommand
+require('plugins.ui.alpha.project-list').setup()
+
 local buttons = require('plugins.ui.alpha.buttons').buttons
+local projects = require('plugins.ui.alpha.projects').projects
 
 local header = {
     type = 'text',
@@ -16,12 +20,6 @@ local header = {
         position = 'center',
         hl = 'AlphaHeader',
     },
-}
-
-local projects = {
-    type = 'group',
-    val = {},
-    opts = { spacing = 1 },
 }
 
 local opts = {
