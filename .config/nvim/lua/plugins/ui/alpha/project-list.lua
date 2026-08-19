@@ -7,11 +7,11 @@ local HOUR = 60 * 60
 local DAY = 24 * HOUR
 local WEEK = 7 * DAY
 
-local data_path = vim.fn.stdpath('data') .. '/project-list.json'
+local data_path = vim.fs.joinpath(vim.fn.stdpath('data'), 'project-list.json')
 
 local visited_projects = {} -- Per-session
-local buf_roots = {} -- Maps buffers to `root_dir`s
 
+-- FRECENCY
 local function frecency(entry, now)
     local age = now - entry.last_accessed
     if age < HOUR then
@@ -28,20 +28,22 @@ end
 local function sort_by_frecency(entries)
     -- Pinning this to keep it consistent across every element
     local now = os.time()
-    table.sort(
-        entries,
-        function(a, b) return frecency(a, now) > frecency(b, now) end
-    )
+    table.sort(entries, function(a, b)
+        local fa, fb = frecency(a, now), frecency(b, now)
+        if fa == fb then return a.last_accessed > b.last_accessed end
+        return fa > fb
+    end)
 end
 
-local function get_entries()
+-- PERSISTENCE
+local function read_db()
     if vim.fn.filereadable(data_path) == 0 then return {} end
 
-    local lines = vim.fn.readfile(data_path)
-    if #lines == 0 then return {} end -- lines = {} in this case anyway
+    local ok_read, lines = pcall(vim.fn.readfile, data_path)
+    if not ok_read or #lines == 0 then return {} end
 
     -- Entire JSON is stored in one line
-    local ok_decode, decoded = pcall(vim.fn.json_decode, lines[1])
+    local ok_decode, decoded = pcall(vim.json.decode, lines[1])
 
     -- Could theoretically happen if DB file is tampered with/corrupted
     if not ok_decode or type(decoded) ~= 'table' then
@@ -60,7 +62,7 @@ end
 local function write_db(entries)
     -- Entries are sorted on read due to score decay, so there's no point to
     -- sort them here.
-    local encoded = vim.fn.json_encode(entries)
+    local encoded = vim.json.encode(entries)
 
     local ok_write, err = pcall(vim.fn.writefile, { encoded }, data_path)
     if not ok_write then
@@ -71,16 +73,18 @@ local function write_db(entries)
     end
 end
 
---- Record one access to `path`. No-ops if this project was already accessed
---- earlier in the current session.
+-- LOGIC
+-- Record one access to `path`. No-ops if this project was already accessed
+-- earlier in the current session.
 local function record_access(path)
+    if not path then return end
     if visited_projects[path] then return end
     visited_projects[path] = true
 
-    local entries = get_entries()
+    local project_list = read_db()
 
     local found_entry
-    for _, entry in ipairs(entries) do
+    for _, entry in ipairs(project_list) do
         if entry.path == path then
             found_entry = entry
             break
@@ -92,76 +96,54 @@ local function record_access(path)
         found_entry.score = found_entry.score + 1
         found_entry.last_accessed = now
     else
-        table.insert(entries, { path = path, score = 1, last_accessed = now })
+        table.insert(
+            project_list,
+            { path = path, score = 1, last_accessed = now }
+        )
     end
 
-    sort_by_frecency(entries)
+    sort_by_frecency(project_list)
 
     -- Even though only one entry is added at a time, the DB file could be
     -- tampered with, MAX_PROJECTS could be reduced by an arbitrary amount, etc.
     -- This is safer.
-    for i = #entries, MAX_PROJECTS + 1, -1 do
-        entries[i] = nil
+    for i = #project_list, MAX_PROJECTS + 1, -1 do
+        project_list[i] = nil
     end
 
-    write_db(entries)
+    write_db(project_list)
 end
 
---- Resolve root_dir for a buffer, prompting only if this buffer has already
---- resolved to a *different* root_dir before.
-local function get_root_dir(bufnr, client)
-    local cached_dir = buf_roots[bufnr]
-    local lsp_dir = client.config and client.config.root_dir
-    if lsp_dir then lsp_dir = vim.fs.normalize(lsp_dir) end
-
-    if lsp_dir then
-        if not cached_dir then
-            buf_roots[bufnr] = lsp_dir
-            return lsp_dir
-        end
-
-        if cached_dir == lsp_dir then
-            buf_roots[bufnr] = cached_dir
-            return cached_dir
-        end
-
-        local git_dir = vim.fs.root(bufnr, { '.git' })
-        if git_dir then git_dir = vim.fs.normalize(git_dir) end
-        buf_roots[bufnr] = git_dir
-        return git_dir
-    end
-
-    if cached_dir then
-        buf_roots[bufnr] = cached_dir
-        return cached_dir
-    end
-
+-- Resolve root_dir for a buffer
+local function get_root_dir(bufnr)
     local git_dir = vim.fs.root(bufnr, { '.git' })
     if git_dir then git_dir = vim.fs.normalize(git_dir) end
-    buf_roots[bufnr] = git_dir
     return git_dir
 end
 
 function M.setup()
-    vim.api.nvim_create_autocmd('LspAttach', { -- what if there is no LSP?
+    vim.api.nvim_create_autocmd('FileType', {
         -- This ensures the autocommand will not stack, just in case setup is
         -- ever called more than once per neovim session.
         group = vim.api.nvim_create_augroup('project-list', { clear = true }),
-        callback = function(args)
-            local client = vim.lsp.get_client_by_id(args.data.client_id)
-            -- Can happen if the LSP fails to start for some reason
-            if not client then return end
 
-            local root_dir = get_root_dir(args.buf, client)
+        callback = function(args)
+            local bufnr = args.buf
+            if vim.bo[bufnr].buftype ~= '' then return end
+
+            -- Ensure buffer is still valid before continuing
+            if not vim.api.nvim_buf_is_valid(bufnr) then return end
+
+            local root_dir = get_root_dir(bufnr)
             if root_dir then record_access(root_dir) end
         end,
     })
 end
 
---- Returns all stored project paths, sorted by frecency (highest first).
+-- Returns all stored project paths, sorted by frecency (highest first).
 function M.get_projects()
     local paths = {}
-    for _, e in ipairs(get_entries()) do
+    for _, e in ipairs(read_db()) do
         table.insert(paths, e.path)
     end
     return paths
