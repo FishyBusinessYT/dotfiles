@@ -3,6 +3,8 @@ local M = {}
 -- Technically configurable, but this is only defined here to avoid
 -- 'magic number'ing. I intend to keep this value untouched.
 local MAX_PROJECTS = 15
+local AGING_THRESHOLD = 200
+local AGING_FACTOR = 0.80
 local HOUR = 60 * 60
 local DAY = 24 * HOUR
 local WEEK = 7 * DAY
@@ -33,6 +35,18 @@ local function sort_by_frecency(entries)
         if fa == fb then return a.last_accessed > b.last_accessed end
         return fa > fb
     end)
+end
+
+local function maybe_age(entries)
+    local total = 0
+    for _, e in ipairs(entries) do
+        total = total + e.score
+    end
+    if total <= AGING_THRESHOLD then return end
+
+    for _, e in ipairs(entries) do
+        e.score = e.score * AGING_FACTOR
+    end
 end
 
 -- PERSISTENCE
@@ -102,6 +116,7 @@ local function record_access(path)
         )
     end
 
+    maybe_age(project_list)
     sort_by_frecency(project_list)
 
     -- Even though only one entry is added at a time, the DB file could be
