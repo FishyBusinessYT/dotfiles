@@ -172,7 +172,6 @@ text_editor/appearance/minimap/show_minimap = false
 text_editor/appearance/minimap/minimap_width = 80
 text_editor/appearance/lines/word_wrap = 0
 text_editor/appearance/lines/autowrap_mode = 3
-text_editor/appearance/whitespace/draw_spaces = true
 text_editor/appearance/whitespace/line_spacing = 4
 text_editor/behavior/navigation/v_scroll_speed = 80
 text_editor/behavior/indent/type = 1
