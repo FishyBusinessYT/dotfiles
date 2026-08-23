@@ -1,5 +1,5 @@
-local make_button = require('plugins.ui.alpha.buttons').make_button
-local get_projects = require('plugins.ui.alpha.project-list').get_projects
+local make_button = require('plugins.ui.dashboard.buttons').make_button
+local get_projects = require('plugins.ui.dashboard.project-list').get_projects
 
 local M = {}
 

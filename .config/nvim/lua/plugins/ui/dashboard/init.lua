@@ -1,8 +1,8 @@
 -- Set up project tracking autocommand
-require('plugins.ui.alpha.project-list').setup()
+require('plugins.ui.dashboard.project-list').setup()
 
-local buttons = require('plugins.ui.alpha.buttons').buttons
-local projects = require('plugins.ui.alpha.projects').projects
+local buttons = require('plugins.ui.dashboard.buttons').buttons
+local projects = require('plugins.ui.dashboard.projects').projects
 
 local header = {
     type = 'text',
