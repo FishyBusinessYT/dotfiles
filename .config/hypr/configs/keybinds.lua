@@ -8,6 +8,7 @@ local browser = 'firefox'
 hl.bind('SUPER + T', hl.dsp.exec_cmd(terminal))
 hl.bind('SUPER + F', hl.dsp.exec_cmd(browser))
 hl.bind('SUPER + G', hl.dsp.exec_cmd('godot'))
+hl.bind('SUPER + N', hl.dsp.exec_cmd(terminal .. ' -e nvim'))
 
 -- Shutdown, suspend, reboot and lock
 hl.bind(
