@@ -31,7 +31,7 @@ hl.bind('SUPER + SHIFT + L', hl.dsp.exec_cmd('hyprlock'))
 -- Take screenshot
 hl.bind(
     'SUPER + SHIFT + S',
-    hl.dsp.exec_cmd('hyprshot -m region -s --clipboard-only')
+    hl.dsp.exec_cmd('hyprshot -z -m region -s --clipboard-only')
 )
 
 -- Open color picker
