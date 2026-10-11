@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-INTERVAL=5s
+INTERVAL=5m
 WALLPAPERS_DIR="$HOME/.config/wallpapers"
 
 while true; do
