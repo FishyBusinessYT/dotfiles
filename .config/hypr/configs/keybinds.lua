@@ -4,26 +4,26 @@
 local terminal = 'kitty'
 local browser = 'firefox'
 
--- Apps
+-- Other apps
 hl.bind('SUPER + T', hl.dsp.exec_cmd(terminal))
 hl.bind('SUPER + F', hl.dsp.exec_cmd(browser))
 hl.bind('SUPER + G', hl.dsp.exec_cmd('godot'))
 hl.bind('SUPER + N', hl.dsp.exec_cmd(terminal .. ' -e nvim'))
 
--- Shutdown, suspend, reboot and lock
+-- Shutdown, logout, reboot and lock
 hl.bind(
     'SUPER + SHIFT + F4',
     hl.dsp.exec_cmd('systemctl poweroff'),
     { locked = true }
 )
 hl.bind(
-    'SUPER + SHIFT + DELETE',
-    hl.dsp.exec_cmd('systemctl reboot'),
+    'SUPER + SHIFT + ESCAPE',
+    hl.dsp.exec_cmd('hyprctl dispatch "hl.dsp.exit()"'),
     { locked = true }
 )
 hl.bind(
-    'SUPER + SHIFT + ESCAPE',
-    hl.dsp.exec_cmd('systemctl suspend'),
+    'SUPER + SHIFT + DELETE',
+    hl.dsp.exec_cmd('systemctl reboot'),
     { locked = true }
 )
 hl.bind('SUPER + SHIFT + L', hl.dsp.exec_cmd('hyprlock'))
@@ -48,13 +48,13 @@ hl.bind(
 -- Close window
 hl.bind('SUPER + Q', hl.dsp.window.close())
 
--- Move focus with mainMod + arrow keys
+-- Move focus with Super + arrow keys
 hl.bind('SUPER + H', hl.dsp.focus({ direction = 'l' }))
 hl.bind('SUPER + J', hl.dsp.focus({ direction = 'd' }))
 hl.bind('SUPER + K', hl.dsp.focus({ direction = 'u' }))
 hl.bind('SUPER + L', hl.dsp.focus({ direction = 'r' }))
 
--- Switch workspaces with mainMod + [1-9]
+-- Switch workspaces with Super + <N>
 hl.bind('SUPER + 1', hl.dsp.focus({ workspace = 1 }))
 hl.bind('SUPER + 2', hl.dsp.focus({ workspace = 2 }))
 hl.bind('SUPER + 3', hl.dsp.focus({ workspace = 3 }))
@@ -65,20 +65,20 @@ hl.bind('SUPER + 7', hl.dsp.focus({ workspace = 7 }))
 hl.bind('SUPER + 8', hl.dsp.focus({ workspace = 8 }))
 hl.bind('SUPER + 9', hl.dsp.focus({ workspace = 9 }))
 
--- Goto next/previous occupied workspace
+-- Go to next/previous occupied workspace
 hl.bind('SUPER + 0', hl.dsp.focus({ workspace = 'e+1' }))
 hl.bind('SUPER + SHIFT + 0', hl.dsp.focus({ workspace = 'e-1' }))
 
--- Move active window to a workspace with mainMod + SHIFT + [1-5]
-hl.bind('SUPER + SHIFT + 1', hl.dsp.window.move({ workspace = 1 })) -- MAY NEED TO ADD, follow=true
-hl.bind('SUPER + SHIFT + 2', hl.dsp.window.move({ workspace = 2 })) -- MAY NEED TO ADD, follow=true
-hl.bind('SUPER + SHIFT + 3', hl.dsp.window.move({ workspace = 3 })) -- MAY NEED TO ADD, follow=true
-hl.bind('SUPER + SHIFT + 4', hl.dsp.window.move({ workspace = 4 })) -- MAY NEED TO ADD, follow=true
-hl.bind('SUPER + SHIFT + 5', hl.dsp.window.move({ workspace = 5 })) -- MAY NEED TO ADD, follow=true
-hl.bind('SUPER + SHIFT + 6', hl.dsp.window.move({ workspace = 6 })) -- MAY NEED TO ADD, follow=true
-hl.bind('SUPER + SHIFT + 7', hl.dsp.window.move({ workspace = 7 })) -- MAY NEED TO ADD, follow=true
-hl.bind('SUPER + SHIFT + 8', hl.dsp.window.move({ workspace = 8 })) -- MAY NEED TO ADD, follow=true
-hl.bind('SUPER + SHIFT + 9', hl.dsp.window.move({ workspace = 9 })) -- MAY NEED TO ADD, follow=true
+-- Move active window to a workspace with Super + SHIFT + <N>
+hl.bind('SUPER + SHIFT + 1', hl.dsp.window.move({ workspace = 1 }))
+hl.bind('SUPER + SHIFT + 2', hl.dsp.window.move({ workspace = 2 }))
+hl.bind('SUPER + SHIFT + 3', hl.dsp.window.move({ workspace = 3 }))
+hl.bind('SUPER + SHIFT + 4', hl.dsp.window.move({ workspace = 4 }))
+hl.bind('SUPER + SHIFT + 5', hl.dsp.window.move({ workspace = 5 }))
+hl.bind('SUPER + SHIFT + 6', hl.dsp.window.move({ workspace = 6 }))
+hl.bind('SUPER + SHIFT + 7', hl.dsp.window.move({ workspace = 7 }))
+hl.bind('SUPER + SHIFT + 8', hl.dsp.window.move({ workspace = 8 }))
+hl.bind('SUPER + SHIFT + 9', hl.dsp.window.move({ workspace = 9 }))
 
 -- Multimedia keys for volume and LCD brightness
 local mediaControl = '$HOME/.config/scripts/media_control.sh'
