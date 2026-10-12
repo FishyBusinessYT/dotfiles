@@ -21,8 +21,9 @@ hl.config({
         -- Reduce opacity of inactive windows
         inactive_opacity = 0.9,
 
-        -- Disable shadows
+        -- Disable shadows and blur
         shadow = { enabled = false },
+        blur = { enabled = false },
     },
 
     misc = {
