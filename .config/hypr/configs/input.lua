@@ -24,14 +24,12 @@ hl.config({
         workspace_swipe_direction_lock = false,
     },
     cursor = {
-        -- Hide the cursor after some time
+        -- Hide the cursor
         inactive_timeout = 3,
+        hide_on_key_press = true,
 
         -- Don't teleport the cursor when changing focus with the keyboard
         no_warps = true,
-
-        -- Self explanatory
-        hide_on_key_press = true,
     },
     misc = {
         middle_click_paste = false,
@@ -50,4 +48,6 @@ hl.gesture({
     fingers = 2,
     direction = 'pinch',
     action = 'cursor_zoom',
+    zoom_level = 1,
+    mode = 'live',
 })

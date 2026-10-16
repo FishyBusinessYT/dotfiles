@@ -4,15 +4,11 @@ require('configs.keybinds')
 require('configs.lookandfeel')
 require('configs.wrules')
 
-
 -- Monitor config
 hl.monitor({ output = '', mode = 'preferred', position = 'auto', scale = '1' })
 
 -- Startup programs
 hl.on('hyprland.start', function()
-    -- Login screen
-    hl.exec_cmd('hyprlock || hyprctl dispatch exit')
-
     -- Clipboard manager
     hl.exec_cmd('wl-paste --watch cliphist store')
 
