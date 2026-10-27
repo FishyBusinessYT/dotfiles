@@ -1,6 +1,6 @@
 -- Window rules
 
--- Ignore maximize requests
+-- Don't let apps start maximized
 hl.window_rule({
     name = 'ignore-maximize',
     match = { class = '.*' },
@@ -24,6 +24,7 @@ hl.window_rule({
 hl.window_rule({
     match = { class = 'xdg-desktop-portal-gtk' },
     float = true,
+    center = true,
     size = { 1000, 700 },
     decorate = false,
 })

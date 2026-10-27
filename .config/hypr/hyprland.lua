@@ -4,15 +4,19 @@ require('configs.keybinds')
 require('configs.lookandfeel')
 require('configs.wrules')
 
-
 -- Monitor config
 hl.monitor({ output = '', mode = 'preferred', position = 'auto', scale = '1' })
+hl.on(
+    'monitor.added',
+    function()
+        hl.exec_cmd(
+            'sleep 0.05; awww img "$HOME/.config/wallpapers/current.png" --transition-step=255'
+        )
+    end
+)
 
 -- Startup programs
 hl.on('hyprland.start', function()
-    -- Login screen
-    hl.exec_cmd('hyprlock || hyprctl dispatch exit')
-
     -- Clipboard manager
     hl.exec_cmd('wl-paste --watch cliphist store')
 

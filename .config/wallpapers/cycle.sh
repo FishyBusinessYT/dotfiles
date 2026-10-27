@@ -14,5 +14,6 @@ while true; do
         -t center \
         --transition-step 255 \
         --transition-fps 60
+    pkill -USR2 hyprlock
     sleep $INTERVAL
 done
