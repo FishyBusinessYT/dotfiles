@@ -6,6 +6,14 @@ require('configs.wrules')
 
 -- Monitor config
 hl.monitor({ output = '', mode = 'preferred', position = 'auto', scale = '1' })
+hl.on(
+    'monitor.added',
+    function()
+        hl.exec_cmd(
+            'sleep 0.05; awww img "$HOME/.config/wallpapers/current.png" --transition-step=255'
+        )
+    end
+)
 
 -- Startup programs
 hl.on('hyprland.start', function()
